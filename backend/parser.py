@@ -4,6 +4,15 @@ from datetime import datetime
 STATION = re.compile(r"^[A-Z]{2}\d{2}$")
 FLAGS = {"A": "实测", "M": "插补", "B": "可疑"}
 
+# 实测旗 A、插补旗 M 才参与旗争；可疑旗 B 与无法识别的旗不参与
+CONTEST_FLAGS = ("A", "M")
+
+# 让位方式一旦在某天封存，当天不得更换
+YIELD_METHODS = {
+    "measured_keep": "实测留库、插补让位",
+    "drop_both": "两行都不入库",
+}
+
 
 def parse_telegram_line(line: str):
     parts = [part.strip() for part in line.strip().split("|")]
